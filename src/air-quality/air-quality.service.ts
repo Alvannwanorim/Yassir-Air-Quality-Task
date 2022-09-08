@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import axios from 'axios';
-import { AirQualityDto } from './dto/air-quality.dto';
-
+import { AirQualityDto, CreateAirQualityDto } from './dto/air-quality.dto';
+import { AirQuality, AirQualityDocument } from './schema/air-quality.schema';
+import { Model } from 'mongoose';
 @Injectable()
 export class AirQualityService {
+	constructor(@InjectModel(AirQuality.name) private airQualityModel: Model<AirQualityDocument>) {}
 	/**
      * @Method 
      * @Params
@@ -51,5 +54,23 @@ export class AirQualityService {
 		const { longitude, latitude } = airQualityDto;
 		const airQuality = await this.FetchAirQualityByLatAndLong(latitude, longitude);
 		return { result: { pollution: airQuality.data.current.pollution } };
+	}
+
+	/**
+     * @Params 
+     * @Return 
+     */
+	public async createAirQualityObject(latitude: string, longitude: string) {
+		const airQuality = await this.FetchAirQualityByLatAndLong(latitude, longitude);
+		const pollution = airQuality.data.current.pollution;
+		const newAirQuality = new this.airQualityModel({
+			ts: pollution,
+			aqius: pollution.aqius,
+			mainus: pollution.mainus,
+			aqicn: pollution.aqicn,
+			maincn: pollution.maincn
+		});
+		await newAirQuality.save();
+		return newAirQuality;
 	}
 }

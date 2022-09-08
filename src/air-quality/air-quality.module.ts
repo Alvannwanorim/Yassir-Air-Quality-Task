@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AirQualityService } from './air-quality.service';
 import { AirQualityController } from './air-quality.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AirQuality, AirQualitySchema } from './schema/air-quality.schema';
 
 @Module({
-  providers: [AirQualityService],
-  controllers: [AirQualityController]
+	imports: [ MongooseModule.forFeature([ { name: AirQuality.name, schema: AirQualitySchema } ]) ],
+	providers: [ AirQualityService ],
+	controllers: [ AirQualityController ]
 })
 export class AirQualityModule {}

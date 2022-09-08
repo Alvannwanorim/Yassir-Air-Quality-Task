@@ -1,11 +1,28 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class AirQualityDto {
-	@IsString()
-	@IsNotEmpty()
-	public latitude: string;
+	@IsNotEmpty() public latitude: string;
 
-	@IsString()
+	@IsNotEmpty() public longitude: string;
+}
+export class CreateAirQualityDto {
 	@IsNotEmpty()
-	public longitude: string;
+	@IsString()
+	ts: string;
+
+	@IsNotEmpty()
+	@IsNumber()
+	aqius: number;
+
+	@IsNotEmpty()
+	@IsString()
+	mainus: string;
+
+	@IsNotEmpty()
+	@IsNumber()
+	aqicn: number;
+
+	@IsNotEmpty()
+	@IsString()
+	maincn: string;
 }
