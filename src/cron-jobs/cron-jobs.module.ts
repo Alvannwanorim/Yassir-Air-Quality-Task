@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { AirQualityModule } from 'src/air-quality/air-quality.module';
 import { CronJobsService } from './cron-jobs.service';
 
 @Module({
-  providers: [CronJobsService]
+	imports: [ AirQualityModule ],
+	providers: [ CronJobsService ]
 })
 export class CronJobsModule {}

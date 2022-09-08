@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AirQualityService } from './air-quality.service';
 import { AirQualityDto } from './dto/air-quality.dto';
 
@@ -17,8 +17,16 @@ export class AirQualityController {
 	/**
      * getAirQualityByLatAndLong
      */
-	@Get('coordinates')
+	@Post('coordinates')
 	public async getAirQualityByLatAndLong(@Body() airQualityDto: AirQualityDto) {
 		return await this.airQualityService.getAirQualityByLatAndLong(airQualityDto);
+	}
+
+	/**
+     * getAirQualityByLatAndLong
+     */
+	@Get('paris')
+	public async getPairHighestAirPollution() {
+		return await this.airQualityService.getPairHighestAirPollution();
 	}
 }

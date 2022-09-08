@@ -7,6 +7,7 @@ import { AirQuality, AirQualitySchema } from './schema/air-quality.schema';
 @Module({
 	imports: [ MongooseModule.forFeature([ { name: AirQuality.name, schema: AirQualitySchema } ]) ],
 	providers: [ AirQualityService ],
-	controllers: [ AirQualityController ]
+	controllers: [ AirQualityController ],
+	exports: [ AirQualityService, MongooseModule ]
 })
 export class AirQualityModule {}

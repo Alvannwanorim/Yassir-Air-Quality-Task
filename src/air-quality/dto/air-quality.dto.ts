@@ -1,9 +1,13 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsLatitude, IsLongitude, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class AirQualityDto {
-	@IsNotEmpty() public latitude: string;
+	@IsNotEmpty()
+	@IsLatitude()
+	latitude: string;
 
-	@IsNotEmpty() public longitude: string;
+	@IsNotEmpty()
+	@IsLongitude()
+	longitude: string;
 }
 export class CreateAirQualityDto {
 	@IsNotEmpty()

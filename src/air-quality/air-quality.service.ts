@@ -63,8 +63,9 @@ export class AirQualityService {
 	public async createAirQualityObject(latitude: string, longitude: string) {
 		const airQuality = await this.FetchAirQualityByLatAndLong(latitude, longitude);
 		const pollution = airQuality.data.current.pollution;
+
 		const newAirQuality = new this.airQualityModel({
-			ts: pollution,
+			ts: pollution.ts,
 			aqius: pollution.aqius,
 			mainus: pollution.mainus,
 			aqicn: pollution.aqicn,
@@ -72,5 +73,28 @@ export class AirQualityService {
 		});
 		await newAirQuality.save();
 		return newAirQuality;
+	}
+
+	public async getMaxPollution() {
+		return new Promise((resolve, reject) => {
+			this.airQualityModel
+				.find({})
+				.select([ 'aqius', 'createdAt', 'updatedAt' ])
+				.sort({ aqius: -1 })
+				.limit(1)
+				.exec(function(err, doc) {
+					if (err) reject(err);
+					return resolve(doc);
+				});
+		});
+	}
+
+	/**
+     * @Params 
+     * @Return 
+     */
+	public async getPairHighestAirPollution() {
+		const airQuality = await this.getMaxPollution();
+		return { aqius: airQuality[0].aqius, datetime: airQuality[0].createdAt };
 	}
 }
