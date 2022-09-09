@@ -29,4 +29,11 @@ export class AirQualityController {
 	public async getPairHighestAirPollution() {
 		return await this.airQualityService.getPairHighestAirPollution();
 	}
+	/**
+     * getAirQualityByLatAndLong
+     */
+	@Get('paris')
+	public async createAirQualityObject(@Body() airQualityDto: AirQualityDto) {
+		return await this.airQualityService.createAirQualityObject(airQualityDto.latitude, airQualityDto.longitude);
+	}
 }

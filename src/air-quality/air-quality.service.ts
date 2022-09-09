@@ -16,10 +16,9 @@ export class AirQualityService {
 		const url = `${process.env.AIRVISUAL_URL}/v2/nearest_city?key=${process.env.AIRVISUAL_SECRET_KEY}`;
 		try {
 			const { data } = await axios.get(url);
-			return data;
+			return data.data.current.pollution;
 		} catch (err) {
-			console.error(err.response.data);
-			throw new NotFoundException('Error fetching data');
+			throw new NotFoundException('Record not found.');
 		}
 	}
 	/**
@@ -32,10 +31,9 @@ export class AirQualityService {
 			.AIRVISUAL_SECRET_KEY}`;
 		try {
 			const { data } = await axios.get(url);
-			return data;
+			return data.data.current.pollution;
 		} catch (err) {
-			console.error(err.response.data);
-			throw new NotFoundException('Error fetching data');
+			throw new Error('Record not found.');
 		}
 	}
 	/**
@@ -53,7 +51,7 @@ export class AirQualityService {
 	public async getAirQualityByLatAndLong(airQualityDto: AirQualityDto) {
 		const { longitude, latitude } = airQualityDto;
 		const airQuality = await this.FetchAirQualityByLatAndLong(latitude, longitude);
-		return { result: { pollution: airQuality.data.current.pollution } };
+		return airQuality;
 	}
 
 	/**
