@@ -60,7 +60,7 @@ export class AirQualityService {
      */
 	public async createAirQualityObject(latitude: string, longitude: string) {
 		const airQuality = await this.FetchAirQualityByLatAndLong(latitude, longitude);
-		const pollution = airQuality.data.current.pollution;
+		const pollution = airQuality;
 
 		const newAirQuality = new this.airQualityModel({
 			ts: pollution.ts,

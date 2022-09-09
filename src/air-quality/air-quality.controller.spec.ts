@@ -44,10 +44,10 @@ describe('AirQualityController', () => {
 		it('should return an object of AirQuality', async () => {
 			jest
 				.spyOn(service, 'getAirQualityByNearestCity')
-				.mockResolvedValue({ data: AirQualityData, success: true });
+				.mockResolvedValue({ result: { pollution: { AirQualityData } }, success: true });
 			const AirQuality = await controller.getAirQualityByNearestCity();
 
-			expect(AirQuality).toMatchObject({ data: AirQualityData, success: true });
+			expect(AirQuality).toMatchObject({ result: { pollution: { AirQualityData } }, success: true });
 		});
 
 		it('should throw error record not found', async () => {
